@@ -3,6 +3,7 @@ io/swagger/api/GetUsersApiService.class
 io/swagger/api/impl/GetUsersApiServiceImpl.class
 io/swagger/api/RFC3339DateFormat.class
 io/swagger/api/StringUtil.class
+io/swagger/api/impl/App.class
 io/swagger/api/ApiOriginFilter.class
 io/swagger/api/factories/GetUsersApiServiceFactory.class
 io/swagger/api/ApiResponseMessage.class

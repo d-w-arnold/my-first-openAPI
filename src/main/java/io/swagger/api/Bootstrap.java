@@ -17,7 +17,8 @@ public class Bootstrap extends HttpServlet
     public void init(ServletConfig config) throws ServletException
     {
         Info info = new Info()
-                .title("Swagger Server")
+                .title("DWP Online Test - Software Engineer Interview")
+                .version("1.0.0")
                 .description("This is my online test for the role of Software Engineer.")
                 .termsOfService("")
                 .contact(new Contact()
