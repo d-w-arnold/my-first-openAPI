@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.io.IOException;
 
 @Path("/getUsers")
 
@@ -51,7 +52,7 @@ public class GetUsersApi
 
             @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found", response = Void.class)})
     public Response getUsers(@Context SecurityContext securityContext)
-            throws NotFoundException
+            throws NotFoundException, IOException
     {
         return delegate.getUsers(securityContext);
     }
