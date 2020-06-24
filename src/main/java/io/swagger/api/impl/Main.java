@@ -207,6 +207,30 @@ public class Main
     }
 
     /**
+     * Parse a set of users to JSON Array
+     *
+     * @param set The set of users to be parsed
+     * @return A JSON Array of that set
+     */
+    public JSONArray parseSetToJSONArray(Set<User> set)
+    {
+        JSONArray jsonArray = new JSONArray();
+        for (User user : set) {
+            jsonArray.put(new JSONObject()
+                    .put("id", user.getId())
+                    .put("first_name", user.getFirstName())
+                    .put("last_name", user.getLastName())
+                    .put("email", user.getEmail())
+                    .put("ip_address", user.getIpAddress())
+                    .put("latitude", user.getLatitude())
+                    .put("longitude", user.getLongitude())
+                    .put("city", user.getCity())
+            );
+        }
+        return jsonArray;
+    }
+
+    /**
      * Parse an InputStream from a cURL process to a JSON Array
      *
      * @param process The cURL process
