@@ -53,31 +53,28 @@ public class Main
     }
 
     /**
-     * Calculate distance between two points in latitude and longitude taking
-     * into account height difference. If you are not interested in height
-     * difference pass 0.0. Uses Haversine method as its base.
+     * Calculate distance between two points in latitude and longitude.
+     * https://www.geodatasource.com/developers/java
      *
      * @param lat1 Lat Start point
      * @param lat2 Lat End point
      * @param lon1 Lon Start point
      * @param lon2 Lon End point
-     * @param el1  Start altitude in metres
-     * @param el2  End altitude in metres
      * @returns Distance in miles
      */
-    public double distance(double lat1, double lat2, double lon1, double lon2, double el1, double el2)
+    public double distance(double lat1, double lat2, double lon1, double lon2)
     {
-        final int R = 6371; // Radius of the earth
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to metres
-        double height = el1 - el2;
-        distance = Math.pow(distance, 2) + Math.pow(height, 2);
-        return metresToMiles(Math.sqrt(distance));
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        } else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2))
+                    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                    * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            return dist * 60 * 1.1515;
+        }
     }
 
     /**
@@ -207,17 +204,6 @@ public class Main
                     o.getString("ip_address"), o.getDouble("latitude"),
                     o.getDouble("longitude"), city));
         }
-    }
-
-    /**
-     * Convert metres to miles.
-     *
-     * @param metres A distance in metres
-     * @return Distance in miles
-     */
-    private double metresToMiles(double metres)
-    {
-        return metres * 0.000621371192; // 1 metre is 0.000621371192 miles
     }
 
     /**
