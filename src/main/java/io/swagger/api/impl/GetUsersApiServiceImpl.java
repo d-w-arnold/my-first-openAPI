@@ -9,7 +9,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2020-06-23T15:45:21.078Z")
@@ -18,11 +20,9 @@ public class GetUsersApiServiceImpl extends GetUsersApiService
     @Override
     public Response getUsers(SecurityContext securityContext) throws NotFoundException, IOException
     {
-        Main main = new Main();
-
         String city = "London";
-        JSONArray londonUsers = main.queryUsersByCity(city);
-        main.populateUsersByCityFromJSON(londonUsers, city);
+        Main main = new Main();
+        main.populateUsersByCityFromJSON(main.queryUsersByCity(city), city);
 
         Set<User> finalUsers = main.getUsersByCity();
         Set<Integer> finalUsersIDs = new HashSet<>();
@@ -34,8 +34,6 @@ public class GetUsersApiServiceImpl extends GetUsersApiService
         for (int i = 0; i < allUsers.length(); i++) {
             JSONObject o = allUsers.getJSONObject(i);
             if (!finalUsersIDs.contains(o.getInt("id"))) {
-                // Now checking non-london users to see if their current coordinates are
-                // within 50 miles of London
                 double latStart = o.getDouble("latitude");
                 double lonStart = o.getDouble("longitude");
                 double miles = main.distance(latStart, main.getLONDON_LAT(),
@@ -51,6 +49,9 @@ public class GetUsersApiServiceImpl extends GetUsersApiService
             }
         }
 
-        return Response.ok().entity(finalUsers).type(MediaType.APPLICATION_JSON_TYPE).build();
+        List<User> finalUsersSorted = new ArrayList<>(finalUsers);
+        finalUsersSorted.sort((s1, s2) -> s1.getId() - s2.getId());
+
+        return Response.ok().entity(finalUsersSorted).type(MediaType.APPLICATION_JSON_TYPE).build();
     }
 }
