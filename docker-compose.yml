@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  jetty:
+    image: maven:3.6.3-openjdk-11
+    volumes:
+      - .:/app
+    working_dir: /app
+    container_name: jetty_server
+    ports:
+      - "8080:8080"
+    command: mvn clean package -q jetty:run
+    networks:
+      - code-network
+  swagger:
+    image: swaggerapi/swagger-ui:latest
+    container_name: swagger-ui
+    ports:
+      - "80:8080"
+    env_file:
+      - ./.env
+    networks:
+      - code-network
+    depends_on:
+      - jetty
+networks:
+  code-network:
+    driver: bridge
