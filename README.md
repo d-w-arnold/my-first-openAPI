@@ -11,7 +11,7 @@ This example uses the [JAX-RS](https://jax-rs-spec.java.net/) framework.
 To run the server, please execute the following:
 
 ```bash
-$ mvn clean package -q jetty:run
+mvn clean package -q jetty:run
 ```
 
 You can then view the swagger listing here:
@@ -29,8 +29,8 @@ http://localhost:8080/getUsers
 You can also view the swagger listing in Swagger UI by executing the following commands:
 
 ```bash
-$ docker pull swaggerapi/swagger-ui
-$ docker run -d -p 80:8080 -e SWAGGER_JSON_URL=http://localhost:8080/swagger.json swaggerapi/swagger-ui
+docker pull swaggerapi/swagger-ui
+docker run -d -p 80:8080 -e SWAGGER_JSON_URL=http://localhost:8080/swagger.json swaggerapi/swagger-ui
 ```
 
 To view the swagger listing in Swagger UI, browse to:
