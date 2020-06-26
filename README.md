@@ -8,23 +8,61 @@ is an example of building a swagger-enabled JAX-RS server.
 
 This example uses the [JAX-RS](https://jax-rs-spec.java.net/) framework.
 
-To run the server, please execute the following:
+---
+
+### Docker-Compose
+
+Run the following command in the project root directory:
 
 ```bash
-mvn clean package -q jetty:run
+docker-compose up -d
 ```
 
 You can then view the swagger listing here:
+
+(Once the 'jetty_server' container has been created, it can take between 60-90 secs for the webapp to build and start running at the below URL)
 
 ```
 http://localhost:8080/swagger.json
 ```
 
-You can then view who is listed as either living in London, or whose current coordinates are within 50 miles of London here:
+The swagger listing can then be viewed in Swagger UI, browse to:
+
+(Swagger UI will use the above URL for the swagger listing as the default URL to explore)
+
+```
+http://localhost/
+```
+
+You can view who is listed as either living in London, or whose current coordinates are within 50 miles of London here:
 
 ```
 http://localhost:8080/getUsers
 ```
+
+---
+
+### Manual (Docker optional)
+
+To run the jetty server, run the following command in the project root directory:
+
+```bash
+mvn clean package jetty:run
+```
+
+Once the webapp has built and started running, you can then view the swagger listing here:
+
+```
+http://localhost:8080/swagger.json
+```
+
+You can view who is listed as either living in London, or whose current coordinates are within 50 miles of London here:
+
+```
+http://localhost:8080/getUsers
+```
+
+#### (Docker optional)
 
 You can also view the swagger listing in Swagger UI by executing the following commands:
 
@@ -34,6 +72,8 @@ docker run -d -p 80:8080 -e SWAGGER_JSON_URL=http://localhost:8080/swagger.json 
 ```
 
 To view the swagger listing in Swagger UI, browse to:
+
+(Swagger UI will use the above URL for the swagger listing as the default URL to explore)
 
 ```
 http://localhost/
