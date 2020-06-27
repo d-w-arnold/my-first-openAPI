@@ -4,6 +4,7 @@
 /app/src/main/java/io/swagger/api/impl/User.java
 /app/src/gen/java/io/swagger/api/ApiResponseMessage.java
 /app/src/main/java/io/swagger/api/impl/GetUsersApiServiceImpl.java
+/app/src/main/java/io/swagger/api/impl/MainTest.java
 /app/src/gen/java/io/swagger/api/StringUtil.java
 /app/src/main/java/io/swagger/api/Bootstrap.java
 /app/src/main/java/io/swagger/api/factories/GetUsersApiServiceFactory.java
