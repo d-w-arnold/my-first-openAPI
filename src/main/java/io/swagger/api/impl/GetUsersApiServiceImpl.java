@@ -43,7 +43,7 @@ public class GetUsersApiServiceImpl extends GetUsersApiService
                     finalUsers.add(new User(userID, o.getString("first_name"),
                             o.getString("last_name"), o.getString("email"),
                             o.getString("ip_address"), o.getDouble("latitude"),
-                            o.getDouble("longitude"), main.queryUserCity(userID)));
+                            o.getDouble("longitude"), main.queryUserByID(userID).getString("city")));
                     finalUsersIDs.add(userID);
                 }
             }

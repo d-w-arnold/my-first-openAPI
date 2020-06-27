@@ -79,6 +79,16 @@ public class Main
     }
 
     /**
+     * Get the URL for online test API
+     *
+     * @return The URL for the online test API
+     */
+    public String getDWP_API()
+    {
+        return DWP_API;
+    }
+
+    /**
      * Get the lat of the centre of London (in Decimal Degrees)
      *
      * @return Lat of the center of London
@@ -135,24 +145,6 @@ public class Main
     }
 
     /**
-     * Query the DWP API to get the city of a user by specifying their user ID.
-     *
-     * @param id The user's ID
-     * @return The user's city
-     * @throws IOException Using cURL
-     */
-    public String queryUserCity(int id) throws IOException
-    {
-        // curl -X GET "https://bpdts-test-app.herokuapp.com/user/{id}" -H "accept: application/json"
-        String url = DWP_API + "user/" + id;
-        String[] command = {"curl", "-X", "GET", url, "H", "Accept: application/json"};
-        ProcessBuilder processBuilder = new ProcessBuilder(command);
-        Process process = processBuilder.start();
-        JSONObject json = parseInputStreamToJSONObject(process);
-        return json.getString("city");
-    }
-
-    /**
      * Query the DWP API to get all users that match with a specificed city
      *
      * @param city The city to match with
@@ -170,6 +162,23 @@ public class Main
     }
 
     /**
+     * Query the DWP API to get a user's details by specifying their user ID.
+     *
+     * @param id The user's ID
+     * @return The users's details as a JSON object
+     * @throws IOException Using cURL
+     */
+    public JSONObject queryUserByID(int id) throws IOException
+    {
+        // curl -X GET "https://bpdts-test-app.herokuapp.com/user/{id}" -H "accept: application/json"
+        String url = DWP_API + "user/" + id;
+        String[] command = {"curl", "-X", "GET", url, "H", "Accept: application/json"};
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
+        return parseInputStreamToJSONObject(process);
+    }
+
+    /**
      * Populates allUsers from a given JSON array
      *
      * @param jsonArray All users as a JSON array
@@ -184,7 +193,7 @@ public class Main
             allUsers.add(new User(userID, o.getString("first_name"),
                     o.getString("last_name"), o.getString("email"),
                     o.getString("ip_address"), o.getDouble("latitude"),
-                    o.getDouble("longitude"), queryUserCity(userID)));
+                    o.getDouble("longitude"), queryUserByID(userID).getString("city")));
         }
     }
 
